@@ -18,7 +18,7 @@ python3 detect.py
 
 # Clone branch
 sudo rm -rf yolov3 && git clone -b multi_gpu --depth 1 https://github.com/ultralytics/yolov3
-cd yolov3 && python3 train.py --batch-size 104
+cd yolov3 && python3 test.py
 
 sudo rm -rf yolov3 && git clone -b multigpu --depth 1 https://github.com/alexpolichroniadis/yolov3
 cp coco.data yolov3/cfg

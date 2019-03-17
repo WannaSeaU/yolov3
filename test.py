@@ -53,7 +53,6 @@ def test(
         t = time.time()
         output = model(imgs.to(device))
         output = non_max_suppression(output, conf_thres=conf_thres, nms_thres=nms_thres)
-        print(output.device.type)
 
         # Compute average precision for each sample
         for si, detections in enumerate(output):
