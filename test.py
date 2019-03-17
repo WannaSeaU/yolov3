@@ -92,17 +92,12 @@ def test(
                 continue
             else:
                 # Extract target boxes as (x1, y1, x2, y2)
-                print(labels.device.type, labels.dtype)
                 target_box = xywh2xyxy(labels[:, 1:5]) * img_size
-                print(target_box.device.type)
                 target_cls = labels[:, 0]
 
                 detected = []
-                print(detections.device.type)
                 for *pred_box, conf, cls_conf, cls_pred in detections:
                     # Best iou, index between pred and targets
-
-                    print(pred_box[0].device.type)
                     iou, bi = bbox_iou(pred_box, target_box).max(0)
 
                     # If iou > threshold and class is correct mark as correct
@@ -113,10 +108,10 @@ def test(
                         correct.append(0)
 
             # Compute Average Precision (AP) per class
-            AP, AP_class, R, P = ap_per_class(tp=correct,
-                                              conf=detections[:, 4],
-                                              pred_cls=detections[:, 6],
-                                              target_cls=target_cls)
+            AP, AP_class, R, P = ap_per_class(tp=np.array(correct),
+                                              conf=detections[:, 4].numpy(),
+                                              pred_cls=detections[:, 6].numpy(),
+                                              target_cls=target_cls.numpy())
 
             # Accumulate AP per class
             AP_accum_count += np.bincount(AP_class, minlength=nC)
@@ -167,7 +162,7 @@ def test(
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='test.py')
-    parser.add_argument('--batch-size', type=int, default=32, help='size of each image batch')
+    parser.add_argument('--batch-size', type=int, default=4, help='size of each image batch')
     parser.add_argument('--cfg', type=str, default='cfg/yolov3.cfg', help='cfg file path')
     parser.add_argument('--data-cfg', type=str, default='cfg/coco.data', help='coco.data file path')
     parser.add_argument('--weights', type=str, default='weights/yolov3.weights', help='path to weights file')

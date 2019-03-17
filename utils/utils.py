@@ -134,9 +134,6 @@ def ap_per_class(tp, conf, pred_cls, target_cls):
         The average precision as computed in py-faster-rcnn.
     """
 
-    # lists/pytorch to numpy
-    tp, conf, pred_cls, target_cls = np.array(tp), np.array(conf), np.array(pred_cls), np.array(target_cls)
-
     # Sort by objectness
     i = np.argsort(-conf)
     tp, conf, pred_cls = tp[i], conf[i], pred_cls[i]
