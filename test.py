@@ -100,7 +100,7 @@ def test(
                 for *pred_box, conf, cls_conf, cls_pred in detections:
                     # Best iou, index between pred and targets
 
-                    print(pred_box.device.type)
+                    print(pred_box[0].device.type)
                     print(target_box.device.type)
                     iou, bi = bbox_iou(pred_box, target_box).max(0)
 
