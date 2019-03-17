@@ -49,9 +49,11 @@ def test(
     AP_accum, AP_accum_count = np.zeros(nC), np.zeros(nC)
     coco91class = coco80_to_coco91_class()
     for (imgs, targets, paths, shapes) in dataloader:
+        targets = targets.to(device)
         t = time.time()
         output = model(imgs.to(device))
         output = non_max_suppression(output, conf_thres=conf_thres, nms_thres=nms_thres)
+        print(output.device.type)
 
         # Compute average precision for each sample
         for si, detections in enumerate(output):
@@ -95,8 +97,12 @@ def test(
                 target_cls = labels[:, 0]
 
                 detected = []
+                print(detections.device.type)
                 for *pred_box, conf, cls_conf, cls_pred in detections:
                     # Best iou, index between pred and targets
+
+                    print(pred_box.device.type)
+                    print(target_box.device.type)
                     iou, bi = bbox_iou(pred_box, target_box).max(0)
 
                     # If iou > threshold and class is correct mark as correct
