@@ -92,7 +92,9 @@ def test(
                 continue
             else:
                 # Extract target boxes as (x1, y1, x2, y2)
+                print(labels.device.type)
                 target_box = xywh2xyxy(labels[:, 1:5]) * img_size
+                print(target_box.device.type)
                 target_cls = labels[:, 0]
 
                 detected = []
@@ -101,7 +103,6 @@ def test(
                     # Best iou, index between pred and targets
 
                     print(pred_box[0].device.type)
-                    print(target_box.device.type)
                     iou, bi = bbox_iou(pred_box, target_box).max(0)
 
                     # If iou > threshold and class is correct mark as correct
