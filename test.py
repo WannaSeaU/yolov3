@@ -92,7 +92,7 @@ def test(
                 continue
             else:
                 # Extract target boxes as (x1, y1, x2, y2)
-                print(labels.device.type)
+                print(labels.device.type, labels.dtype)
                 target_box = xywh2xyxy(labels[:, 1:5]) * img_size
                 print(target_box.device.type)
                 target_cls = labels[:, 0]
