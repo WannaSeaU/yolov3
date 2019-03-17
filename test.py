@@ -109,9 +109,9 @@ def test(
 
             # Compute Average Precision (AP) per class
             AP, AP_class, R, P = ap_per_class(tp=np.array(correct),
-                                              conf=detections[:, 4].numpy(),
-                                              pred_cls=detections[:, 6].numpy(),
-                                              target_cls=target_cls.numpy())
+                                              conf=detections[:, 4].cpu().numpy(),
+                                              pred_cls=detections[:, 6].cpu().numpy(),
+                                              target_cls=target_cls.cpu().numpy())
 
             # Accumulate AP per class
             AP_accum_count += np.bincount(AP_class, minlength=nC)
